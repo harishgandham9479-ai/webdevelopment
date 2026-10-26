@@ -1,0 +1,626 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitNova | Fitness & Wellness</title>
+<meta name="description" content="Discover workout programs, expert trainers, fitness classes and membership plans at FitNova.">
+<style>
+:root {
+  --primary: #246bfd;
+  --primary-dark: #1450d2;
+  --ink: #17243a;
+  --muted: #718096;
+  --light: #f3f7ff;
+  --white: #fff;
+  --border: #e5ebf5;
+  --radius: 22px;
+  --shadow: 0 14px 45px rgba(29, 67, 135, .09);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; scroll-padding-top:90px; }
+body {
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  color:var(--ink); background:var(--white);
+  line-height:1.6; overflow-x:hidden;
+}
+button, input, select, textarea { font:inherit; }
+button, a { -webkit-tap-highlight-color:transparent; }
+a { text-decoration:none; color:inherit; }
+button { cursor:pointer; }
+.container { width:min(1160px, 91%); margin:auto; }
+section { padding:88px 0; }
+.section-heading { text-align:center; max-width:660px; margin:0 auto 42px; }
+.eyebrow {
+  color:var(--primary); font-size:.78rem; font-weight:800;
+  letter-spacing:2px; text-transform:uppercase;
+}
+.section-heading h2 { font-size:clamp(2rem,4vw,3.15rem); line-height:1.15; margin:12px 0; letter-spacing:-1.4px; }
+.section-heading p, .muted { color:var(--muted); }
+.btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:13px 22px; border:1px solid transparent; border-radius:12px;
+  font-weight:750; transition:transform .25s, box-shadow .25s, background .25s;
+}
+.btn:hover { transform:translateY(-3px); box-shadow:0 10px 24px #246bfd30; }
+.btn-primary { color:white; background:var(--primary); }
+.btn-primary:hover { background:var(--primary-dark); }
+.btn-outline { color:var(--ink); background:white; border-color:var(--border); }
+.btn-outline:hover { border-color:var(--primary); color:var(--primary); }
+.tag {
+  display:inline-block; padding:6px 12px; border-radius:30px;
+  color:var(--primary); background:#eaf1ff; font-size:.78rem; font-weight:800;
+}
+nav {
+  position:sticky; top:0; z-index:1000; background:#ffffffed;
+  backdrop-filter:blur(16px); border-bottom:1px solid #e5ebf5;
+}
+.nav-inner { height:76px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+.logo { font-size:1.65rem; font-weight:950; letter-spacing:-1.2px; }
+.logo span { color:var(--primary); }
+.nav-links { display:flex; align-items:center; gap:26px; font-size:.91rem; font-weight:650; }
+.nav-links a { transition:color .2s; }
+.nav-links a:hover { color:var(--primary); }
+.menu-toggle { display:none; border:0; background:none; font-size:1.7rem; color:var(--ink); }
+.hero {
+  padding:70px 0 84px;
+  background:radial-gradient(ellipse at 90% 20%, #dceaff 0, transparent 36%),
+             linear-gradient(130deg,#f8fbff,#edf4ff);
+  overflow:hidden;
+}
+.hero-grid { display:grid; grid-template-columns:1.02fr .98fr; gap:48px; align-items:center; }
+.hero-copy h1 { font-size:clamp(2.8rem,5.5vw,5rem); line-height:1.04; letter-spacing:-3px; margin:20px 0; }
+.hero-copy h1 span { color:var(--primary); }
+.hero-copy>p { color:var(--muted); font-size:1.08rem; max-width:520px; }
+.hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin:28px 0; }
+.hero-stats { display:flex; flex-wrap:wrap; gap:30px; margin-top:35px; }
+.stat strong { display:block; font-size:1.55rem; }
+.stat span { font-size:.84rem; color:var(--muted); }
+.hero-image { position:relative; }
+.hero-image img {
+  width:100%; height:480px; object-fit:cover; border-radius:32px;
+  box-shadow:var(--shadow); animation:floatIn .9s ease both;
+}
+.floating-card {
+  position:absolute; bottom:24px; left:-24px; background:white; padding:16px 20px;
+  border-radius:17px; box-shadow:var(--shadow); animation:float 4s ease-in-out infinite;
+}
+.floating-card strong { display:block; }
+.floating-card small { color:var(--muted); }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-9px)} }
+@keyframes floatIn { from{opacity:0;transform:translateY(25px)} to{opacity:1;transform:translateY(0)} }
+.trust-row { padding:24px 0; border-bottom:1px solid var(--border); }
+.trust-inner { display:flex; flex-wrap:wrap; justify-content:space-around; gap:20px; color:#728098; font-weight:800; }
+.trust-inner span { display:flex; gap:8px; align-items:center; }
+.grid { display:grid; gap:22px; }
+.program-grid { grid-template-columns:repeat(3,1fr); }
+.card {
+  border:1px solid var(--border); border-radius:var(--radius);
+  background:white; overflow:hidden;
+  transition:transform .3s, box-shadow .3s, border-color .3s;
+}
+.card:hover { transform:translateY(-7px); box-shadow:var(--shadow); border-color:#cbdcff; }
+.program-img { height:205px; width:100%; object-fit:cover; display:block; }
+.card-body { padding:24px; }
+.card h3 { font-size:1.25rem; margin:9px 0; }
+.card p { color:var(--muted); font-size:.92rem; }
+.card-bottom { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:19px; }
+.text-link { color:var(--primary); font-weight:800; }
+.text-link:hover { text-decoration:underline; }
+.soft-section { background:var(--light); }
+.trainer-grid { grid-template-columns:repeat(4,1fr); }
+.trainer-img { height:240px; width:100%; object-fit:cover; display:block; }
+.trainer-info { padding:18px; }
+.trainer-info h3 { font-size:1.08rem; }
+.trainer-info p { color:var(--muted); font-size:.88rem; }
+.stars { color:#f5a623; letter-spacing:2px; }
+.plan-grid { grid-template-columns:repeat(3,1fr); align-items:stretch; }
+.plan {
+  padding:30px; border:1px solid var(--border); border-radius:25px;
+  background:white; position:relative; transition:transform .3s,box-shadow .3s;
+}
+.plan:hover { transform:translateY(-6px); box-shadow:var(--shadow); }
+.plan.featured { border:2px solid var(--primary); box-shadow:0 15px 50px #246bfd16; }
+.popular { position:absolute; top:17px; right:17px; font-size:.72rem; font-weight:900; color:var(--primary); background:#eaf1ff; padding:5px 9px; border-radius:20px; }
+.plan h3 { font-size:1.3rem; margin:10px 0; }
+.price { font-size:2.65rem; font-weight:900; letter-spacing:-1px; margin:14px 0 0; }
+.price small { font-size:.88rem; font-weight:500; color:var(--muted); letter-spacing:0; }
+.plan>p { color:var(--muted); font-size:.9rem; }
+.plan ul { list-style:none; margin:24px 0; }
+.plan li { padding:9px 0; border-bottom:1px solid #eef1f7; font-size:.92rem; }
+.plan li::before { content:"✓"; color:var(--primary); font-weight:900; margin-right:10px; }
+.plan .btn { width:100%; }
+.billing { display:flex; justify-content:center; align-items:center; gap:12px; margin:-16px 0 36px; }
+.billing button { border:1px solid var(--border); padding:8px 15px; border-radius:20px; background:white; font-weight:700; }
+.billing button.active { color:white; background:var(--primary); border-color:var(--primary); }
+.schedule-wrap { overflow-x:auto; border:1px solid var(--border); border-radius:18px; background:white; }
+table { width:100%; border-collapse:collapse; min-width:650px; }
+th,td { padding:17px 18px; text-align:left; border-bottom:1px solid var(--border); }
+th { background:#eaf1ff; color:var(--ink); font-size:.85rem; }
+td { font-size:.9rem; }
+tr:last-child td { border-bottom:0; }
+.class-pill { display:inline-block; padding:5px 10px; border-radius:8px; background:#edf4ff; color:var(--primary); font-size:.8rem; font-weight:750; }
+.facility-grid { grid-template-columns:repeat(3,1fr); }
+.facility { background:var(--light); border-radius:18px; padding:25px; }
+.facility .emoji { font-size:2rem; }
+.facility h3 { margin:10px 0 5px; }
+.facility p { color:var(--muted); font-size:.92rem; }
+.cta {
+  background:linear-gradient(120deg,#246bfd,#528bff); color:white;
+  border-radius:28px; padding:48px; display:flex; justify-content:space-between;
+  align-items:center; gap:28px;
+}
+.cta h2 { font-size:clamp(1.8rem,3.6vw,2.8rem); line-height:1.15; }
+.cta p { color:#e5edff; margin-top:10px; }
+.cta .btn { background:white; color:var(--primary); flex-shrink:0; }
+.form-section { background:var(--light); }
+.form-grid { display:grid; grid-template-columns:.8fr 1.2fr; gap:45px; align-items:start; }
+.form-intro h2 { font-size:clamp(2rem,4vw,3rem); line-height:1.15; margin:15px 0; }
+.form-intro p { color:var(--muted); }
+.contact-point { display:flex; gap:12px; margin-top:22px; }
+.contact-point strong { display:block; }
+.form-card { padding:30px; border:1px solid var(--border); border-radius:24px; background:white; box-shadow:var(--shadow); }
+.form-card h3 { font-size:1.4rem; margin-bottom:20px; }
+.form-fields { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.field { display:flex; flex-direction:column; gap:7px; }
+.field.full { grid-column:1/-1; }
+.field label { font-size:.86rem; font-weight:750; }
+.field input,.field select,.field textarea {
+  width:100%; border:1px solid #dce4f1; border-radius:10px; padding:12px 13px;
+  background:#fbfcff; outline:none; transition:border-color .2s,box-shadow .2s;
+}
+.field input:focus,.field select:focus,.field textarea:focus {
+  border-color:var(--primary); box-shadow:0 0 0 3px #246bfd1c;
+}
+.field textarea { min-height:90px; resize:vertical; }
+.form-card .btn { width:100%; margin-top:20px; }
+.form-message { display:none; margin-top:15px; padding:12px; border-radius:10px; background:#eaf8ef; color:#176b39; }
+footer { padding:45px 0 22px; }
+.footer-grid { display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:28px; padding-bottom:30px; }
+.footer-grid p { color:var(--muted); font-size:.9rem; margin-top:10px; max-width:300px; }
+.footer-grid h4 { margin-bottom:12px; }
+.footer-grid a { display:block; margin:8px 0; color:var(--muted); font-size:.9rem; }
+.footer-grid a:hover { color:var(--primary); }
+.copyright { border-top:1px solid var(--border); padding-top:20px; color:var(--muted); font-size:.85rem; display:flex; justify-content:space-between; gap:15px; flex-wrap:wrap; }
+.reveal { opacity:0; transform:translateY(25px); transition:opacity .7s ease,transform .7s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+#backTop {
+  position:fixed; bottom:22px; right:22px; z-index:50; width:45px; height:45px;
+  border:0; border-radius:50%; color:white; background:var(--primary);
+  font-size:1.25rem; box-shadow:var(--shadow); opacity:0; pointer-events:none;
+  transform:translateY(10px); transition:.25s;
+}
+#backTop.show { opacity:1; pointer-events:auto; transform:translateY(0); }
+.toast {
+  position:fixed; bottom:24px; left:50%; transform:translate(-50%,20px);
+  padding:13px 20px; border-radius:12px; color:white; background:var(--ink);
+  box-shadow:var(--shadow); opacity:0; pointer-events:none; z-index:2000;
+  transition:.3s; max-width:90%; text-align:center;
+}
+.toast.show { opacity:1; transform:translate(-50%,0); }
+@media(max-width:900px) {
+  .nav-links { gap:14px; font-size:.82rem; }
+  .hero-grid { gap:25px; }
+  .hero-image img { height:400px; }
+  .trainer-grid { grid-template-columns:repeat(2,1fr); }
+  .footer-grid { grid-template-columns:repeat(2,1fr); }
+  .form-grid { gap:25px; }
+}
+@media(max-width:700px) {
+  section { padding:65px 0; }
+  .nav-inner { height:68px; }
+  .menu-toggle { display:block; }
+  .nav-links {
+    display:none; position:absolute; top:68px; left:0; right:0;
+    padding:20px 5%; background:white; border-bottom:1px solid var(--border);
+    flex-direction:column; align-items:stretch; gap:0; box-shadow:var(--shadow);
+  }
+  .nav-links.open { display:flex; }
+  .nav-links a { padding:12px 0; font-size:1rem; }
+  .nav-links .btn { margin-top:8px; }
+  .hero { padding-top:48px; }
+  .hero-grid,.form-grid { grid-template-columns:1fr; }
+  .hero-copy h1 { letter-spacing:-2px; }
+  .hero-image img { height:340px; }
+  .floating-card { left:10px; bottom:12px; }
+  .program-grid,.plan-grid,.facility-grid { grid-template-columns:1fr; }
+  .plan { padding:25px; }
+  .cta { padding:30px; align-items:flex-start; flex-direction:column; }
+  .form-fields { grid-template-columns:1fr; }
+  .field.full { grid-column:auto; }
+  .trust-inner { justify-content:flex-start; }
+}
+@media(max-width:420px) {
+  .trainer-grid { grid-template-columns:1fr; }
+  .hero-stats { gap:18px; }
+  .hero-image img { height:290px; }
+  .form-card { padding:21px; }
+  .footer-grid { grid-template-columns:1fr; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after { scroll-behavior:auto!important; animation:none!important; transition:none!important; }
+  .reveal { opacity:1; transform:none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container nav-inner">
+    <a href="#home" class="logo">Fit<span>Nova.</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#programs">Programs</a>
+      <a href="#trainers">Trainers</a>
+      <a href="#schedule">Classes</a>
+      <a href="#membership">Membership</a>
+      <a href="#join" class="btn btn-primary">Join Now ↗</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="tag">✦ YOUR FITNESS JOURNEY STARTS HERE</span>
+      <h1>Build strength.<br>Find your <span>power.</span></h1>
+      <p>Move better, feel stronger, and become your best self with expert coaching, inspiring workouts, and a community that keeps you going.</p>
+      <div class="hero-actions">
+        <a href="#membership" class="btn btn-primary">Explore Membership →</a>
+        <a href="#programs" class="btn btn-outline">Explore Programs</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><strong><span data-count="12">0</span>+</strong><span>Workout programs</span></div>
+        <div class="stat"><strong><span data-count="8">0</span>+</strong><span>Expert trainers</span></div>
+        <div class="stat"><strong><span data-count="20">0</span>+</strong><span>Weekly classes</span></div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=85" alt="Modern gym with professional fitness equipment">
+      <div class="floating-card">
+        <strong>⚡ Your goals. Your pace.</strong>
+        <small>Small steps. Big transformations.</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-row">
+  <div class="container trust-inner">
+    <span>✦ Expert Coaching</span><span>◎ Modern Equipment</span>
+    <span>♡ Friendly Community</span><span>↗ Flexible Programs</span>
+  </div>
+</div>
+
+<section id="programs">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="eyebrow">Find your focus</span>
+      <h2>Training that moves you forward.</h2>
+      <p>Whether you are starting fresh or chasing a new personal best, find the right program for your goals.</p>
+    </div>
+    <div class="grid program-grid">
+      <article class="card reveal">
+        <img class="program-img" src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=800&q=80" alt="Strength training with dumbbells" loading="lazy">
+        <div class="card-body">
+          <span class="tag">STRENGTH</span><h3>Strength & Conditioning</h3>
+          <p>Build strength, improve technique, and develop a stronger foundation through progressive training.</p>
+          <div class="card-bottom"><span class="muted">45–60 min</span><a href="#join" class="text-link">Get started →</a></div>
+        </div>
+      </article>
+      <article class="card reveal">
+        <img class="program-img" src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80" alt="Athlete doing a fitness workout" loading="lazy">
+        <div class="card-body">
+          <span class="tag">ENDURANCE</span><h3>Cardio & HIIT</h3>
+          <p>Challenge your stamina with energetic interval sessions and workouts that keep you moving.</p>
+          <div class="card-bottom"><span class="muted">30–45 min</span><a href="#join" class="text-link">Get started →</a></div>
+        </div>
+      </article>
+      <article class="card reveal">
+        <img class="program-img" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80" alt="Yoga and flexibility practice" loading="lazy">
+        <div class="card-body">
+          <span class="tag">WELLNESS</span><h3>Yoga & Mobility</h3>
+          <p>Improve flexibility, balance, breathing, and recovery with mindful movement sessions.</p>
+          <div class="card-bottom"><span class="muted">30–60 min</span><a href="#join" class="text-link">Get started →</a></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="soft-section" id="trainers">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="eyebrow">Meet your coaches</span>
+      <h2>Great coaches. Better results.</h2>
+      <p>Get guidance, encouragement, and training support from our sample team of fitness professionals.</p>
+    </div>
+    <div class="grid trainer-grid">
+      <article class="card reveal">
+        <img class="trainer-img" src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=600&q=80" alt="Strength coach" loading="lazy">
+        <div class="trainer-info"><div class="stars">★★★★★</div><h3>Alex Morgan</h3><p>Strength & Conditioning</p></div>
+      </article>
+      <article class="card reveal">
+        <img class="trainer-img" src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80" alt="Fitness coach in a gym" loading="lazy">
+        <div class="trainer-info"><div class="stars">★★★★★</div><h3>Jordan Lee</h3><p>HIIT & Endurance</p></div>
+      </article>
+      <article class="card reveal">
+        <img class="trainer-img" src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=600&q=80" alt="Personal training coach" loading="lazy">
+        <div class="trainer-info"><div class="stars">★★★★★</div><h3>Sam Taylor</h3><p>Personal Training</p></div>
+      </article>
+      <article class="card reveal">
+        <img class="trainer-img" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=600&q=80" alt="Yoga and wellness coach" loading="lazy">
+        <div class="trainer-info"><div class="stars">★★★★★</div><h3>Riley Chen</h3><p>Yoga & Mobility</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="membership">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="eyebrow">Membership plans</span>
+      <h2>Invest in your strongest self.</h2>
+      <p>Choose a plan that fits your routine. Compare features and select the membership that works for you.</p>
+    </div>
+    <div class="billing">
+      <button class="active" data-period="monthly">Monthly</button>
+      <button data-period="yearly">Yearly <span style="color:#16a064">· Save 20%</span></button>
+    </div>
+    <div class="grid plan-grid">
+      <article class="plan reveal">
+        <span class="eyebrow">STARTER</span><h3>Essential</h3>
+        <p>Everything you need to get moving.</p>
+        <div class="price" data-month="₹999" data-year="₹9,590">₹999<small> / month</small></div>
+        <ul><li>Gym floor access</li><li>Basic workout plan</li><li>Locker facilities</li><li>Fitness orientation</li></ul>
+        <button class="btn btn-outline choose-plan" data-plan="Essential">Choose Essential</button>
+      </article>
+      <article class="plan featured reveal">
+        <span class="popular">MOST POPULAR</span>
+        <span class="eyebrow">FOR YOUR GOALS</span><h3>Pro Fitness</h3>
+        <p>More guidance for your fitness journey.</p>
+        <div class="price" data-month="₹1,799" data-year="₹17,270">₹1,799<small> / month</small></div>
+        <ul><li>All Essential features</li><li>Group fitness classes</li><li>Monthly progress review</li><li>Trainer guidance</li><li>Priority class booking</li></ul>
+        <button class="btn btn-primary choose-plan" data-plan="Pro Fitness">Choose Pro Fitness</button>
+      </article>
+      <article class="plan reveal">
+        <span class="eyebrow">PERSONALIZED</span><h3>Elite</h3>
+        <p>A more personalized training experience.</p>
+        <div class="price" data-month="₹2,999" data-year="₹28,790">₹2,999<small> / month</small></div>
+        <ul><li>All Pro Fitness features</li><li>Personal training sessions</li><li>Customized fitness plan</li><li>Nutrition guidance</li><li>Quarterly goal review</li></ul>
+        <button class="btn btn-outline choose-plan" data-plan="Elite">Choose Elite</button>
+      </article>
+    </div>
+    <p class="muted" style="text-align:center;font-size:.8rem;margin-top:22px">* Sample prices for this demo website. Confirm actual fees and terms with the gym.</p>
+  </div>
+</section>
+
+<section class="soft-section" id="facilities">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="eyebrow">Made for your progress</span>
+      <h2>Everything you need to thrive.</h2>
+      <p>A welcoming environment designed to make your workouts comfortable, effective, and enjoyable.</p>
+    </div>
+    <div class="grid facility-grid">
+      <article class="facility reveal"><div class="emoji">🏋️</div><h3>Modern Equipment</h3><p>Strength machines, free weights, and functional training zones.</p></article>
+      <article class="facility reveal"><div class="emoji">🧘</div><h3>Studio Classes</h3><p>Dedicated space for yoga, mobility, and instructor-led sessions.</p></article>
+      <article class="facility reveal"><div class="emoji">🚿</div><h3>Changing Rooms</h3><p>Convenient changing areas and secure locker facilities.</p></article>
+      <article class="facility reveal"><div class="emoji">💪</div><h3>Personal Training</h3><p>Individual guidance tailored to your ability and goals.</p></article>
+      <article class="facility reveal"><div class="emoji">❤️</div><h3>Recovery & Wellness</h3><p>Space to stretch, cool down, and support healthy recovery habits.</p></article>
+      <article class="facility reveal"><div class="emoji">🤝</div><h3>Fitness Community</h3><p>Train alongside supportive people who celebrate every milestone.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="schedule">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="eyebrow">Plan your week</span>
+      <h2>Find a class. Make it count.</h2>
+      <p>Explore this example weekly timetable and choose a session that suits your schedule.</p>
+    </div>
+    <div class="schedule-wrap reveal">
+      <table>
+        <thead><tr><th>Class</th><th>Day</th><th>Time</th><th>Coach</th><th>Level</th></tr></thead>
+        <tbody>
+          <tr><td><span class="class-pill">Strength</span></td><td>Monday</td><td>7:00 AM</td><td>Alex</td><td>All levels</td></tr>
+          <tr><td><span class="class-pill">HIIT</span></td><td>Tuesday</td><td>6:00 PM</td><td>Jordan</td><td>Intermediate</td></tr>
+          <tr><td><span class="class-pill">Yoga</span></td><td>Wednesday</td><td>7:30 AM</td><td>Riley</td><td>All levels</td></tr>
+          <tr><td><span class="class-pill">Full Body</span></td><td>Thursday</td><td>6:30 PM</td><td>Sam</td><td>All levels</td></tr>
+          <tr><td><span class="class-pill">Cardio</span></td><td>Friday</td><td>7:00 AM</td><td>Jordan</td><td>Beginner</td></tr>
+          <tr><td><span class="class-pill">Mobility</span></td><td>Saturday</td><td>9:00 AM</td><td>Riley</td><td>All levels</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted" style="font-size:.82rem;margin-top:13px">* Example schedule only. Actual class times and availability may vary.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="cta reveal">
+      <div><h2>Your future self will thank you.</h2><p>Take the first step today. Your fitness journey starts with one decision.</p></div>
+      <a href="#join" class="btn">Start Your Journey ↗</a>
+    </div>
+  </div>
+</section>
+
+<section class="form-section" id="join">
+  <div class="container form-grid">
+    <div class="form-intro reveal">
+      <span class="eyebrow">Let's get started</span>
+      <h2>Ready to make a change?</h2>
+      <p>Tell us a little about yourself. Choose your preferred membership and fitness goal, and we'll help you plan your next step.</p>
+      <div class="contact-point"><span>📍</span><div><strong>Visit our gym</strong><span class="muted">Your City, Your Country</span></div></div>
+      <div class="contact-point"><span>⏰</span><div><strong>Example opening hours</strong><span class="muted">Monday – Saturday · 6 AM – 10 PM</span></div></div>
+      <div class="contact-point"><span>✉️</span><div><strong>Contact our team</strong><span class="muted">hello@example.com</span></div></div>
+    </div>
+    <form class="form-card reveal" id="registrationForm">
+      <h3>Membership enquiry</h3>
+      <div class="form-fields">
+        <div class="field"><label for="fullName">Full name *</label><input id="fullName" name="fullName" placeholder="Enter your name" required minlength="2" autocomplete="name"></div>
+        <div class="field"><label for="email">Email address *</label><input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email"></div>
+        <div class="field"><label for="phone">Phone number *</label><input id="phone" name="phone" type="tel" placeholder="Your phone number" required minlength="7" autocomplete="tel"></div>
+        <div class="field"><label for="age">Age *</label><input id="age" name="age" type="number" min="16" max="100" placeholder="Your age" required></div>
+        <div class="field"><label for="planSelect">Membership plan *</label>
+          <select id="planSelect" name="plan" required>
+            <option value="">Select a plan</option><option>Essential</option><option>Pro Fitness</option><option>Elite</option>
+          </select>
+        </div>
+        <div class="field"><label for="goal">Fitness goal *</label>
+          <select id="goal" name="goal" required>
+            <option value="">Choose your goal</option><option>Build strength</option><option>Improve endurance</option><option>Improve flexibility</option><option>General fitness</option><option>Personal training</option>
+          </select>
+        </div>
+        <div class="field full"><label for="message">Anything else? (optional)</label><textarea id="message" name="message" placeholder="Tell us about your fitness goals..."></textarea></div>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit Enquiry →</button>
+      <div class="form-message" id="formMessage" role="status"></div>
+      <p class="muted" style="font-size:.78rem;margin-top:12px">Demo form: details are not sent to a server or stored. Connect a backend to receive real enquiries.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div><a href="#home" class="logo">Fit<span>Nova.</span></a><p>Helping you move with purpose, train with confidence, and make fitness part of everyday life.</p></div>
+      <div><h4>Explore</h4><a href="#programs">Workout programs</a><a href="#trainers">Our trainers</a><a href="#facilities">Facilities</a></div>
+      <div><h4>Get started</h4><a href="#membership">Membership plans</a><a href="#schedule">Class schedule</a><a href="#join">Register</a></div>
+      <div><h4>Follow our journey</h4><a href="#join">Contact us</a><a href="#home">Instagram ↗</a><a href="#home">Facebook ↗</a></div>
+    </div>
+    <div class="copyright"><span>© <span id="year"></span> FitNova Fitness. All rights reserved.</span><span>Designed for a stronger tomorrow.</span></div>
+  </div>
+</footer>
+
+<button id="backTop" aria-label="Back to top">↑</button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const $ = (selector, root = document) => root.querySelector(selector);
+const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+
+// Mobile navigation
+const menuToggle = $("#menuToggle");
+const navLinks = $("#navLinks");
+
+menuToggle.addEventListener("click", () => {
+  const isOpen = navLinks.classList.toggle("open");
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+  menuToggle.textContent = isOpen ? "✕" : "☰";
+});
+
+navLinks.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("open");
+    menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.textContent = "☰";
+  });
+});
+
+// Reveal elements as they enter the viewport
+const revealElements = $$(".reveal");
+if ("IntersectionObserver" in window) {
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealElements.forEach(el => revealObserver.observe(el));
+} else {
+  revealElements.forEach(el => el.classList.add("visible"));
+}
+
+// Animated statistics
+const counters = $$("[data-count]");
+if ("IntersectionObserver" in window) {
+  const counterObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = Number(el.dataset.count);
+      const duration = 1000;
+      const start = performance.now();
+
+      function update(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        el.textContent = Math.floor(target * (1 - Math.pow(1 - progress, 3)));
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.7 });
+  counters.forEach(el => counterObserver.observe(el));
+} else {
+  counters.forEach(el => el.textContent = el.dataset.count);
+}
+
+// Monthly/yearly membership pricing
+$$("[data-period]").forEach(button => {
+  button.addEventListener("click", () => {
+    $$("[data-period]").forEach(btn => btn.classList.toggle("active", btn === button));
+    const period = button.dataset.period;
+    $$(".price").forEach(price => {
+      price.innerHTML = price.dataset[period] +
+        `<small> / ${period === "monthly" ? "month" : "year"}</small>`;
+    });
+  });
+});
+
+// Select a membership and scroll to the registration form
+$$(".choose-plan").forEach(button => {
+  button.addEventListener("click", () => {
+    $("#planSelect").value = button.dataset.plan;
+    $("#join").scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => $("#fullName").focus({ preventScroll: true }), 600);
+  });
+});
+
+// Demo registration form
+$("#registrationForm").addEventListener("submit", event => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  if (!form.reportValidity()) return;
+
+  const name = $("#fullName").value.trim();
+  const plan = $("#planSelect").value;
+  const message = $("#formMessage");
+  message.textContent = `Thank you, ${name}! Your ${plan} enquiry has been prepared. This is a demo: no information was sent or saved.`;
+  message.style.display = "block";
+  showToast("Enquiry demo completed successfully!");
+  form.reset();
+});
+
+// Toast notification
+let toastTimer;
+function showToast(text) {
+  const toast = $("#toast");
+  toast.textContent = text;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
+}
+
+// Back-to-top button
+const backTop = $("#backTop");
+window.addEventListener("scroll", () => {
+  backTop.classList.toggle("show", window.scrollY > 500);
+}, { passive: true });
+
+backTop.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+$("#year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
